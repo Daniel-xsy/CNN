@@ -11,7 +11,6 @@ class CNN(nn.Module):
                 kernel_size=2
             ),
             nn.ReLU(),
-            #nn.ReLu和F.ReLu有什么区别
             nn.MaxPool2d(kernel_size=2),
         )
         self.cov2=nn.Sequential(
