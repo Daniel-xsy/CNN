@@ -15,7 +15,11 @@ class MNISTDataset(Dataset):
         self.root_dir=root_dir
         self.set_name=set_name
         self.transform=transform
-    def loaddata(self):
+        (image,label)=self.load_data()
+        self.image=image
+        self.label=label
+    def load_data(self):
+        #读取MNIST数据集
         with gzip.open(os.path.join(self.root_dir,self.set_name+'.idx1-ubyte'),'rb') as lbpath:
             label = np.frombuffer(lbpath.read(), np.uint8, offset=8)
         with gzip.open(os.path.join(self.root_dir,self.set_name+'.idx3-ubyte'),'rb') as imgpath:
@@ -23,6 +27,9 @@ class MNISTDataset(Dataset):
                 imgpath.read(), np.uint8, offset=16).reshape(len(label), 28, 28)
         return (image,label)
     def __getitem__(self,index):
-        pass
+        img,label=self.image[index],int(self.label[index])
+        if self.transform is not None:
+            img=self.transform(img)
+        return img,label
     def __len__(self):
-        pass
+        return len(self.image)
