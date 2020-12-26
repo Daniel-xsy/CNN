@@ -22,7 +22,7 @@ def main():
     optimizer=optim.Adam(cnn.parameters(),lr=0.01)
     loss_func=nn.CrossEntropyLoss()
     accuracy=[]
-    for epoch in range(3):
+    for epoch in range(20):
         for iter_num,(x,y) in enumerate(dataloader_train):
             output=cnn(x.to(device))
             loss=loss_func(output,y.to(device))
@@ -50,10 +50,10 @@ def main():
             length-err_count,err_count,float((length-err_count)/length)))
         accuracy.append((length-err_count)/length)
         time.sleep(4)
-    print('saving model...')
-    torch.save(cnn,'/cnn')
+        print('saving model...')
+        torch.save(cnn,'/cnn.pt')
     for i in range(len(accuracy)):
-        print('Epoch: {} | accuracy: {.4f}'.format(i,accuracy[i]))
+        print('Epoch: {} | accuracy: {}'.format(i,accuracy[i]))
 
 
 if __name__ == "__main__":
