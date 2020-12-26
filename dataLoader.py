@@ -20,9 +20,9 @@ class MNISTDataset(Dataset):
         self.label=label
     def load_data(self):
         #读取MNIST数据集
-        with gzip.open(os.path.join(self.root_dir,self.set_name+'.idx1-ubyte'),'rb') as lbpath:
+        with gzip.open(os.path.join(self.root_dir,self.set_name+'-labels-idx1-ubyte.gz'),'rb') as lbpath:
             label = np.frombuffer(lbpath.read(), np.uint8, offset=8)
-        with gzip.open(os.path.join(self.root_dir,self.set_name+'.idx3-ubyte'),'rb') as imgpath:
+        with gzip.open(os.path.join(self.root_dir,self.set_name+'-images-idx3-ubyte.gz'),'rb') as imgpath:
             image = np.frombuffer(
                 imgpath.read(), np.uint8, offset=16).reshape(len(label), 28, 28)
         return (image,label)
